@@ -1,6 +1,9 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
+import fs from 'fs';
+
 contextBridge.exposeInMainWorld('electron', {
+  fs,
   ipcRenderer: {
     myPing() {
       ipcRenderer.send('ipc-example', 'ping');
