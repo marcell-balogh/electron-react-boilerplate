@@ -10,6 +10,6 @@ export class List extends Component {
   brands: BrandModel[] = this.brandService.getBrands();
 
   render() {
-    return <h1>Example</h1>;
+    return <h1>Test</h1>;
   }
 }
