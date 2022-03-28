@@ -1,45 +1,46 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { BrandService } from './services/BrandService';
+import { Component } from 'react';
 
-function getBrands() {
-  const service: BrandService = new BrandService(
-    'D:/WORK/zoosh/clubspot/clubspot/packages/mobile/brands/'
-  );
-  service.getBrands();
+class Select extends Component<any, { value: string }> {
+  constructor(props: any) {
+    super(props);
+    this.openDirectory = this.openDirectory.bind(this);
+  }
+
+  async openDirectory() {
+    const filePath = await window.electron.selectFolder();
+    const filePathElement = document.getElementById('path');
+    if (filePathElement) {
+      filePathElement.innerText = filePath;
+    }
+    console.log(filePath);
+  }
+
+  render() {
+    return (
+      <div className="select">
+        <button id="btn" type="button" onClick={this.openDirectory}>
+          Open Directory
+        </button>
+        <p>
+          Path: <span id="path" />
+        </p>
+      </div>
+    );
+  }
 }
 
-const Hello = () => {
-  getBrands();
+const Welcome = () => {
   return (
     <div>
-      <h1>White-label Brand Manager</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
+      <h1>Brand Manager</h1>
+      <p>
+        Hello there! This is a white-label brand manager made for the Clubspot
+        application. To start open the brands folder inside the project
+        directory.
+      </p>
+      <Select />
     </div>
   );
 };
@@ -48,7 +49,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<Welcome />} />
       </Routes>
     </Router>
   );

@@ -2,6 +2,7 @@ declare global {
   interface Window {
     electron: {
       fs: any;
+      selectFolder(): Promise<any>;
       ipcRenderer: {
         myPing(): void;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
