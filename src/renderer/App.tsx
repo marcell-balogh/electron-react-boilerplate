@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { Component } from 'react';
+import { Component, useState } from 'react';
+import List from './components/list/List';
 
 class Select extends Component<any, { value: string }> {
   constructor(props: any) {
@@ -15,6 +16,7 @@ class Select extends Component<any, { value: string }> {
       filePathElement.innerText = filePath;
     }
     console.log(filePath);
+    this.props.setPath(filePath);
   }
 
   render() {
@@ -40,16 +42,26 @@ const Welcome = () => {
         application. To start open the brands folder inside the project
         directory.
       </p>
-      <Select />
     </div>
   );
 };
 
 export default function App() {
+  const [directoryPath, setDirectoryPath] = useState('');
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Welcome />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Welcome />
+              <Select path={directoryPath} setPath={setDirectoryPath} />
+              <List path={directoryPath} />
+            </>
+          }
+        />
       </Routes>
     </Router>
   );

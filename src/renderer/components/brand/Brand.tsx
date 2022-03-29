@@ -9,24 +9,21 @@ interface State {
   brand: BrandModel;
 }
 
-class Brand extends Component<Props, State> {
+export class Brand extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {} as State;
+    this.state = {
+      brand: props.brand,
+    };
   }
 
   render() {
     return (
       <>
-        <h3 className="brand-title">{this.state.brand.name}</h3>
-        <img
-          className="brand-img"
-          src={this.state.brand.logo}
-          alt="brand logo"
-        />
+        <p id={this.state.brand.id.toString()} className="brand-title">
+          {this.state.brand.name}
+        </p>
       </>
     );
   }
 }
-
-export default Brand;

@@ -1,35 +1,37 @@
 import { BrandModel } from '../models/BrandModel';
 
-export class BrandService {
-  private PROJECT_PATH: string = '';
-
-  constructor(path: string) {
-    this.PROJECT_PATH = path;
-  }
-
-  // Get all brands
-  getBrands(): BrandModel[] {
-    const brands: BrandModel[] = [];
-    window.electron.fs.readdir(this.PROJECT_PATH, (_err: any, files: any[]) => {
+// Get all brands
+export function getBrands(PROJECT_PATH: string): BrandModel[] {
+  const brands: BrandModel[] = [];
+  let id = 0;
+  if (PROJECT_PATH) {
+    window.electron.fs.readdir(PROJECT_PATH, (_err: any, files: any[]) => {
       files.forEach((file) => {
-        brands.push(this.getBrand(file));
+        const brand: BrandModel = {
+          id,
+          name: file,
+        };
+        brands.push(brand);
+        id += 1;
       });
     });
+    console.log(brands);
     return brands;
   }
-
-  getBrand(file: any): BrandModel {
-    let brand: BrandModel = {} as BrandModel;
-    window.electron.fs.readFile(
-      this.PROJECT_PATH + file,
-      'utf8',
-      (_err: any, data: any) => {
-        brand = JSON.parse(data);
-        console.log(brand);
-      }
-    );
-    return brand;
-  }
+  console.log('noooo', brands);
+  return [];
 }
 
-export default BrandService;
+//   getBrand(file: any): BrandModel {
+//     let brand: BrandModel = {} as BrandModel;
+//     window.electron.fs.readFile(
+//       this.PROJECT_PATH + file,
+//       'utf8',
+//       (_err: any, data: any) => {
+//         brand = JSON.parse(data);
+//         console.log(brand);
+//       }
+//     );
+//     return brand;
+//   }
+// }
