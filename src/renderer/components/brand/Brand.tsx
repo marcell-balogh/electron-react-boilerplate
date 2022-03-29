@@ -21,7 +21,7 @@ export class Brand extends Component<Props, State> {
     return (
       <>
         <p id={this.state.brand.id.toString()} className="brand-title">
-          {this.state.brand.name}
+          {this.state.brand.id + 1}. {this.state.brand.name}
         </p>
       </>
     );
