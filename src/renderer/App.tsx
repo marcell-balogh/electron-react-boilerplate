@@ -1,37 +1,8 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { Component, useState } from 'react';
+import { Component } from 'react';
 import List from './components/list/List';
-
-class Select extends Component<any, { value: string }> {
-  constructor(props: any) {
-    super(props);
-    this.openDirectory = this.openDirectory.bind(this);
-  }
-
-  async openDirectory() {
-    const filePath = await window.electron.selectFolder();
-    const filePathElement = document.getElementById('path');
-    if (filePathElement) {
-      filePathElement.innerText = filePath;
-    }
-    console.log(filePath);
-    this.props.setPath(filePath);
-  }
-
-  render() {
-    return (
-      <div className="select">
-        <button id="btn" type="button" onClick={this.openDirectory}>
-          Open Directory
-        </button>
-        <p>
-          Path: <span id="path" />
-        </p>
-      </div>
-    );
-  }
-}
+import { Select } from './components/select/Select';
 
 const Welcome = () => {
   return (
@@ -46,23 +17,48 @@ const Welcome = () => {
   );
 };
 
-export default function App() {
-  const [directoryPath, setDirectoryPath] = useState('');
+type Props = {
+  props: any;
+};
 
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Welcome />
-              <Select path={directoryPath} setPath={setDirectoryPath} />
-              <List path={directoryPath} />
-            </>
-          }
-        />
-      </Routes>
-    </Router>
-  );
+type State = {
+  directoryPath: string;
+};
+
+export class App extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      directoryPath: '',
+    };
+    this.setPath = this.setPath.bind(this);
+  }
+
+  setPath(path: string) {
+    this.setState({
+      directoryPath: path,
+    });
+  }
+
+  render() {
+    return (
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Welcome />
+                <Select
+                  path={this.state.directoryPath}
+                  setPath={this.setPath}
+                />
+                <List path={this.state.directoryPath} />
+              </>
+            }
+          />
+        </Routes>
+      </Router>
+    );
+  }
 }
