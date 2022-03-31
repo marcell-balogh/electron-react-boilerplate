@@ -53,6 +53,7 @@ export class App extends Component<Props, State> {
                   path={this.state.directoryPath}
                   setPath={this.setPath}
                 />
+                <div className="divider" />
                 <List path={this.state.directoryPath} />
               </>
             }

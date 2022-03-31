@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { getBrands } from '../../services/BrandService';
-import { Brand } from '../brand/Brand';
+import Brand from '../brand/Brand';
 import { BrandModel } from '../../models/BrandModel';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function List({ path }: Props) {
 
   return (
     <>
-      <h3>Brands</h3>
+      <h2>Brands</h2>
       {brands && brands.length > 0 && (
         <ul>
           {brands.map((brand: BrandModel) => {

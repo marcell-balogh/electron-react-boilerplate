@@ -1,29 +1,31 @@
-import { Component } from 'react';
 import { BrandModel } from '../../models/BrandModel';
+import './Brand.css';
 
-interface Props {
+type Props = {
   brand: BrandModel;
-}
+};
 
-interface State {
-  brand: BrandModel;
-}
-
-export class Brand extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      brand: props.brand,
-    };
-  }
-
-  render() {
-    return (
-      <>
-        <p id={this.state.brand.id.toString()} className="brand-title">
-          {this.state.brand.id + 1}. {this.state.brand.name}
-        </p>
-      </>
-    );
-  }
+export default function Brand(props: Props) {
+  const { brand } = props;
+  return (
+    <div className="brand">
+      <div className="brand-logo">
+        <img src="https://via.placeholder.com/80" alt={brand.name} />
+      </div>
+      <div className="brand-content">
+        <h3 id={brand.id.toString()} className="brand-title">
+          {brand.name}
+        </h3>
+        <p className="brand-theme">theme</p>
+      </div>
+      <div className="brand-buttons">
+        <button type="button" className="edit">
+          Edit
+        </button>
+        <button type="button" className="delete">
+          Delete
+        </button>
+      </div>
+    </div>
+  );
 }
