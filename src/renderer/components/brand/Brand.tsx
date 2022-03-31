@@ -1,5 +1,5 @@
 import { BrandModel } from '../../models/BrandModel';
-import './Brand.css';
+import './Brand.scss';
 
 type Props = {
   brand: BrandModel;
@@ -10,7 +10,7 @@ export default function Brand(props: Props) {
   return (
     <div className="brand">
       <div className="brand-logo">
-        <img src="https://via.placeholder.com/80" alt={brand.name} />
+        <img src={`file://${brand.logoPath}`} alt={brand.name} />
       </div>
       <div className="brand-content">
         <h3 id={brand.id.toString()} className="brand-title">
