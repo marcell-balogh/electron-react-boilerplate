@@ -3,6 +3,7 @@ import './App.scss';
 import { Component } from 'react';
 import List from './components/list/List';
 import { Select } from './components/select/Select';
+import BrandDetails from './components/brand-details/BrandDetails';
 
 const Welcome = () => {
   return (
@@ -58,6 +59,9 @@ export class App extends Component<Props, State> {
               </>
             }
           />
+          <Route path="brand">
+            <Route path=":id" element={<BrandDetails />} />
+          </Route>
         </Routes>
       </Router>
     );
