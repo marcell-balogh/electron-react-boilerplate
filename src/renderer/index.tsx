@@ -1,7 +1,14 @@
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import { App } from './App';
+import { brandStore } from './redux/BrandStore';
 
-render(<App />, document.getElementById('root'));
+render(
+  <Provider store={brandStore}>
+    <App props={} />
+  </Provider>,
+  document.getElementById('root')
+);
 
 // calling IPC exposed from preload script
 window.electron.ipcRenderer.once('ipc-example', (arg) => {
