@@ -1,6 +1,9 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import { BrandModel } from '../../models/BrandModel';
+import { getBrands } from '../../services/BrandService';
 
-export class Select extends Component<any, { value: string }> {
+class Select extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.openDirectory = this.openDirectory.bind(this);
@@ -12,8 +15,8 @@ export class Select extends Component<any, { value: string }> {
     if (filePathElement) {
       filePathElement.innerText = filePath;
     }
+    this.props.set(getBrands(filePath));
     console.log(filePath);
-    this.props.setPath(filePath);
   }
 
   render() {
@@ -29,3 +32,9 @@ export class Select extends Component<any, { value: string }> {
     );
   }
 }
+
+const mapDispatchToProps = {
+  set: (payload: BrandModel[]) => ({ type: 'SET_BRANDS', payload }),
+};
+
+export default connect(null, mapDispatchToProps)(Select);

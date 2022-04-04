@@ -1,46 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { selectBrands, set, setByPath } from '../../redux/BrandSlice';
+import { useSelector } from 'react-redux';
 import Brand from '../brand/Brand';
 import { BrandModel } from '../../models/BrandModel';
 import './List.scss';
-import { brandStore } from '../../redux/BrandStore';
-import { getBrand } from '../../services/BrandService';
 
-type Props = {
-  path: string;
-};
-
-export default function List({ path }: Props) {
-  const brands = useSelector(selectBrands);
-  const dispatch = useDispatch();
-  console.log('brands', brands);
-
-  // const brands = useMemo(() => {
-  //   if (!path) {
-  //     return [];
-  //   }
-  //   console.log('path', path);
-  //   return getBrands(path);
-  // }, [path]);
-
-  function getBrands(PROJECT_PATH: string): BrandModel[] {
-    let array = [];
-    if (PROJECT_PATH) {
-      array = window.electron.fs.readdirSync(PROJECT_PATH);
-      const brandModels = array.map((brand: string) => {
-        return getBrand(brand, PROJECT_PATH);
-      });
-      console.log('yesss', brandModels);
-      dispatch(set(brandModels));
-      return brandModels;
-    }
-    console.log('noooo', []);
-    return [];
-  }
-
-  getBrands('D:\\WORK\\zoosh\\clubspot\\clubspot\\packages\\mobile\\brands');
-  console.log('after init', brandStore.getState());
-
+export default function List() {
+  const brands: BrandModel[] = useSelector((state: BrandModel[]) => state);
   return (
     <>
       <div className="list-header">

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { BrandModel } from '../../models/BrandModel';
 import './Brand.scss';
 
@@ -6,6 +7,7 @@ type Props = {
 };
 
 export default function Brand(props: Props) {
+  const navigate = useNavigate();
   const { brand } = props;
   const primary = {
     fill: brand.theme.primaryColor,
@@ -39,7 +41,11 @@ export default function Brand(props: Props) {
         )}
       </div>
       <div className="brand-buttons">
-        <button type="button" className="edit">
+        <button
+          type="button"
+          onClick={() => navigate(`/brand/${brand.id}`)}
+          className="edit"
+        >
           Edit
         </button>
         <button type="button" className="delete">

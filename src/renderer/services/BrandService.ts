@@ -1,7 +1,10 @@
 // Get all brands
 import { BrandModel } from '../models/BrandModel';
 
-export function getBrand(brandName: string, PROJECT_PATH: string): BrandModel {
+export function createBrand(
+  brandName: string,
+  PROJECT_PATH: string
+): BrandModel {
   const brandPath = `${PROJECT_PATH}\\${brandName}`;
   const logoPath = `${brandPath}\\icon.png`;
   const raw = window.electron.fs.readFileSync(
@@ -38,7 +41,7 @@ export function getBrands(PROJECT_PATH: string): BrandModel[] {
   if (PROJECT_PATH) {
     brands = window.electron.fs.readdirSync(PROJECT_PATH);
     const brandModels = brands.map((brand: string) => {
-      return getBrand(brand, PROJECT_PATH);
+      return createBrand(brand, PROJECT_PATH);
     });
     console.log('yesss', brandModels);
     return brandModels;
