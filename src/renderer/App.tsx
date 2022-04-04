@@ -1,6 +1,5 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.scss';
-import { Component } from 'react';
 import List from './components/list/List';
 import Select from './components/select/Select';
 import BrandDetails from './components/brand-details/BrandDetails';
