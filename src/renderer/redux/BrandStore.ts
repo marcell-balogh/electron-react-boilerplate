@@ -1,15 +1,6 @@
-// import { configureStore } from '@reduxjs/toolkit';
-// import brandReducer from './BrandSlice';
-//
-// export const brandStore = configureStore({
-//   reducer: {
-//     brands: brandReducer,
-//   },
-// });
 import { createStore } from '@reduxjs/toolkit';
-import { BrandModel } from '../models/BrandModel';
 
-function brands(state: BrandModel[] = [], action: any) {
+function brands(state: any[] = [], action: any) {
   switch (action.type) {
     case 'ADD_BRAND':
       return [...state, action.payload];

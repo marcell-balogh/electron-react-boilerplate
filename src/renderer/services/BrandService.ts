@@ -1,10 +1,6 @@
 // Get all brands
-import { BrandModel } from '../models/BrandModel';
 
-export function createBrand(
-  brandName: string,
-  PROJECT_PATH: string
-): BrandModel {
+export function createBrand(brandName: string, PROJECT_PATH: string): any {
   const brandPath = `${PROJECT_PATH}\\${brandName}`;
   const logoPath = `${brandPath}\\icon.png`;
   const raw = window.electron.fs.readFileSync(
@@ -17,6 +13,7 @@ export function createBrand(
   } catch (e) {
     alert(e);
   }
+  return json;
   return {
     id: json.default.clubId,
     name: brandName,
@@ -36,7 +33,7 @@ export function createBrand(
   };
 }
 
-export function getBrands(PROJECT_PATH: string): BrandModel[] {
+export function getBrands(PROJECT_PATH: string): any[] {
   let brands = [];
   if (PROJECT_PATH) {
     brands = window.electron.fs.readdirSync(PROJECT_PATH);

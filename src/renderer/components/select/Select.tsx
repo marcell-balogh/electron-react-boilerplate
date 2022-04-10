@@ -25,13 +25,14 @@ class Select extends Component<any, any> {
     return (
       <div className="select">
         <Button
+          className="select-button"
           onClick={this.openDirectory}
           startIcon={<FolderIcon />}
           variant="contained"
         >
           Open Directory
         </Button>
-        <p>
+        <p className="path">
           Path: <span id="path" />
         </p>
       </div>

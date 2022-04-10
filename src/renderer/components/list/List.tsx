@@ -1,17 +1,16 @@
 import { useSelector } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Stack } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import Brand from '../brand/Brand';
-import { BrandModel } from '../../models/BrandModel';
 import './List.scss';
 
 export default function List() {
-  const brands: BrandModel[] = useSelector((state: BrandModel[]) => state);
+  const brands: any[] = useSelector((state: any[]) => state);
   return (
     <>
       <div className="list-header">
-        <h2>Brands</h2>
+        <h2>Brands ({brands.length})</h2>
         <div className="header-buttons">
           <Button startIcon={<AddIcon />} variant="contained">
             Add brand
@@ -21,13 +20,15 @@ export default function List() {
           </Button>
         </div>
       </div>
-      {brands && brands.length > 0 && (
-        <Stack spacing={2}>
-          {brands.map((brand: BrandModel) => {
-            return <Brand key={brand.name} brand={brand} />;
-          })}
-        </Stack>
-      )}
+      <div className="list">
+        {brands && brands.length > 0 && (
+          <Grid container spacing={2}>
+            {brands.map((brand: any) => {
+              return <Brand key={brand.default.suffix} brand={brand} />;
+            })}
+          </Grid>
+        )}
+      </div>
     </>
   );
 }
