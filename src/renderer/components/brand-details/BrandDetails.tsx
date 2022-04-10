@@ -1,6 +1,8 @@
 import './BrandDetails.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { BrandModel } from '../../models/BrandModel';
 
 export default function BrandDetails() {
@@ -13,13 +15,13 @@ export default function BrandDetails() {
   return (
     <>
       <div className="header">
-        <button
-          className="header-part"
-          type="button"
+        <Button
           onClick={() => navigate('/')}
+          startIcon={<ArrowBackIcon />}
+          variant="contained"
         >
           Back
-        </button>
+        </Button>
         {brand && <h1 className="header-part">{brand.name}</h1>}
         <div className="header-part" />
       </div>

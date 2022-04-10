@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import FolderIcon from '@mui/icons-material/Folder';
+import { Button } from '@mui/material';
 import { BrandModel } from '../../models/BrandModel';
 import { getBrands } from '../../services/BrandService';
 
@@ -22,9 +24,13 @@ class Select extends Component<any, any> {
   render() {
     return (
       <div className="select">
-        <button id="btn" type="button" onClick={this.openDirectory}>
+        <Button
+          onClick={this.openDirectory}
+          startIcon={<FolderIcon />}
+          variant="contained"
+        >
           Open Directory
-        </button>
+        </Button>
         <p>
           Path: <span id="path" />
         </p>

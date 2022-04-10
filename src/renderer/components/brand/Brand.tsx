@@ -1,3 +1,6 @@
+import { Button, Paper } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { BrandModel } from '../../models/BrandModel';
 import './Brand.scss';
@@ -16,7 +19,7 @@ export default function Brand(props: Props) {
     fill: brand.theme.secondaryColor,
   };
   return (
-    <div className="brand">
+    <Paper className="brand">
       <div className="brand-logo">
         <img src={`file://${brand.logoPath}`} alt={brand.name} />
       </div>
@@ -41,17 +44,25 @@ export default function Brand(props: Props) {
         )}
       </div>
       <div className="brand-buttons">
-        <button
-          type="button"
+        <Button
           onClick={() => navigate(`/brand/${brand.id}`)}
-          className="edit"
+          size="small"
+          color="info"
+          startIcon={<EditIcon />}
+          variant="contained"
         >
           Edit
-        </button>
-        <button type="button" className="delete">
+        </Button>
+        <Button
+          onClick={() => navigate(`/brand/${brand.id}`)}
+          size="small"
+          color="error"
+          startIcon={<DeleteIcon />}
+          variant="contained"
+        >
           Delete
-        </button>
+        </Button>
       </div>
-    </div>
+    </Paper>
   );
 }
