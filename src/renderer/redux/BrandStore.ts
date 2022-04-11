@@ -1,6 +1,7 @@
 import { createStore } from '@reduxjs/toolkit';
+import { BrandModel } from '../models/BrandModel';
 
-function brands(state: any[] = [], action: any) {
+function brands(state: BrandModel[] = [], action: any) {
   switch (action.type) {
     case 'ADD_BRAND':
       return [...state, action.payload];

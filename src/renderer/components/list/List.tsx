@@ -4,9 +4,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Button, Grid } from '@mui/material';
 import Brand from '../brand/Brand';
 import './List.scss';
+import { BrandModel } from '../../models/BrandModel';
 
 export default function List() {
-  const brands: any[] = useSelector((state: any[]) => state);
+  const brands: BrandModel[] = useSelector((state: BrandModel[]) => state);
   return (
     <>
       <div className="list-header">
@@ -23,8 +24,8 @@ export default function List() {
       <div className="list">
         {brands && brands.length > 0 && (
           <Grid container spacing={2}>
-            {brands.map((brand: any) => {
-              return <Brand key={brand.default.suffix} brand={brand} />;
+            {brands.map((brand: BrandModel) => {
+              return <Brand key={brand.name} brand={brand} />;
             })}
           </Grid>
         )}

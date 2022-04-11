@@ -3,9 +3,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import './Brand.scss';
+import { BrandModel } from '../../models/BrandModel';
 
 type Props = {
-  brand: any;
+  brand: BrandModel;
 };
 
 export default function Brand(props: Props) {
@@ -13,43 +14,42 @@ export default function Brand(props: Props) {
   const { brand } = props;
   console.log(brand);
   const primary = {
-    fill: brand.default.theme.primary,
+    fill: brand.json.default.theme.primary,
   };
   const secondary = {
-    fill: brand.default.theme.secondary,
+    fill: brand.json.default.theme.secondary,
   };
   return (
     <Grid item xs={6}>
       <div className="brand">
         <div className="brand-logo">
-          <img
-            src="https://via.placeholder.com/80"
-            alt={brand.default.suffix}
-          />
+          <img src={`file://${brand.logoPath}`} alt={brand.name} />
         </div>
         <div className="brand-content">
-          <h3 id={brand.default.clubId.toString()} className="brand-title">
-            {brand.default.suffix}
+          <h3 id={brand.id.toString()} className="brand-title">
+            {brand.name}
           </h3>
-          <p className="brand-theme">Schema: {brand.default.theme.scheme}</p>
+          <p className="brand-theme">
+            Schema: {brand.json.default.theme.scheme}
+          </p>
           <p className="brand-theme">
             <svg width="12" height="12">
               <rect width="12" height="12" style={primary} />
             </svg>{' '}
-            - Primary color {brand.default.theme.primaryColor}
+            - Primary {brand.json.default.theme.primary}
           </p>
-          {brand.default.theme.scheme === 'primary' && (
+          {brand.json.default.theme.scheme === 'primary' && (
             <p className="brand-theme">
               <svg width="12" height="12">
                 <rect width="12" height="12" style={secondary} />
               </svg>{' '}
-              - Secondary color {brand.default.theme.secondaryColor}
+              - Secondary {brand.json.default.theme.secondary}
             </p>
           )}
         </div>
         <div className="brand-buttons">
           <Button
-            onClick={() => navigate(`/brand/${brand.default.clubId}`)}
+            onClick={() => navigate(`/brand/${brand.id}`)}
             size="small"
             color="info"
             startIcon={<EditIcon />}
@@ -58,7 +58,7 @@ export default function Brand(props: Props) {
             Edit
           </Button>
           <Button
-            onClick={() => navigate(`/brand/${brand.default.clubId}`)}
+            onClick={() => navigate(`/brand/${brand.id}`)}
             size="small"
             color="error"
             startIcon={<DeleteIcon />}

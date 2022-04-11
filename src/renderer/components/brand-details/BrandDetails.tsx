@@ -1,17 +1,16 @@
 import './BrandDetails.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SaveIcon from '@mui/icons-material/Save';
 import ReactJson from 'react-json-view';
 
 export default function BrandDetails() {
   const navigate = useNavigate();
   const brands = useSelector((state: any[]) => state);
   const { id } = useParams();
-  const brand = brands.find(
-    (brandModel: any) => brandModel.default.clubId === Number(id)
-  );
+  const brand = brands.find((brandModel: any) => brandModel.id === Number(id));
   return (
     <>
       <div className="header">
@@ -22,12 +21,51 @@ export default function BrandDetails() {
         >
           Back
         </Button>
-        {brand && <h1 className="header-part">{brand.default.suffix}</h1>}
-        <div className="header-part" />
+        {brand && <h1 className="header-part">{brand.name}</h1>}
+        <Button
+          onClick={() => navigate('/')}
+          startIcon={<SaveIcon />}
+          variant="contained"
+          color="warning"
+        >
+          Save
+        </Button>
       </div>
+      <TextField
+        required
+        id="outlined-required"
+        label="Id"
+        defaultValue={brand.id}
+        margin="normal"
+      />
+      <TextField
+        required
+        id="outlined-required"
+        label="Name"
+        defaultValue={brand.name}
+        margin="normal"
+      />
+      <label htmlFor="contained-button-file">
+        <input
+          accept="image/*"
+          id="contained-button-file"
+          multiple
+          type="file"
+        />
+        <Button variant="contained" component="span">
+          Upload
+        </Button>
+      </label>
+      <TextField
+        required
+        id="outlined-required"
+        label="Logo path"
+        defaultValue={brand.logoPath}
+        margin="normal"
+      />
       <div className="json">
         <ReactJson
-          src={brand}
+          src={brand.json}
           displayDataTypes={false}
           enableClipboard={false}
         />
@@ -35,64 +73,3 @@ export default function BrandDetails() {
     </>
   );
 }
-
-// <div className="details">
-//   {brand && (
-//     <ul>
-//       <li>
-//         <span>id: </span>
-//         <span>{brand.id}</span>
-//       </li>
-//       <li>
-//         <span>Name: </span>
-//         <span>{brand.name}</span>
-//       </li>
-//       <li>
-//         <span>Welcome text: </span>
-//         <span>{brand.welcomeText}</span>
-//       </li>
-//       <li>
-//         <span>Logo path: </span>
-//         <span>{brand.logoPath}</span>
-//       </li>
-//       <li>
-//         <span>theme: </span>
-//         <ul>
-//           <li>
-//             <span>scheme: </span>
-//             <span>{brand.theme.scheme}</span>
-//           </li>
-//           <li>
-//             <span>primary: </span>
-//             <span>{brand.theme.primaryColor}</span>
-//           </li>
-//           <li>
-//             <span>secondary: </span>
-//             <span>{brand.theme.secondaryColor}</span>
-//           </li>
-//         </ul>
-//       </li>
-//       <li>
-//         <span>features: </span>
-//         <ul>
-//           <li>
-//             <span>fundraiser: </span>
-//             <span>{brand.features.fundraiser.toString()}</span>
-//           </li>
-//           <li>
-//             <span>limit fundraisers: </span>
-//             <span>{brand.features.limitFundraisers.toString()}</span>
-//           </li>
-//           <li>
-//             <span>membership: </span>
-//             <span>{brand.features.membership.toString()}</span>
-//           </li>
-//           <li>
-//             <span>tickets: </span>
-//             <span>{brand.features.tickets.toString()}</span>
-//           </li>
-//         </ul>
-//       </li>
-//     </ul>
-//   )}
-// </div>
