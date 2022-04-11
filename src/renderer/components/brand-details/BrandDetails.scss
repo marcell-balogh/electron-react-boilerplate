@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.json {
+  margin-top: 2rem;
+  display: flex;
+}
+
+.textfield {
+  margin-bottom: 1rem;
+}

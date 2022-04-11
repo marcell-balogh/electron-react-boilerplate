@@ -1,17 +1,13 @@
 export interface BrandModel {
   id: number;
   name: string;
-  welcomeText: string;
   logoPath: string;
-  theme: {
-    scheme: string;
-    primaryColor: string;
-    secondaryColor: string;
-  };
-  features: {
-    fundraiser: boolean;
-    tickets: boolean;
-    membership: boolean;
-    limitFundraisers: boolean;
-  };
+  json: any;
 }
+
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | { [x: string]: JSONValue }
+  | Array<JSONValue>;

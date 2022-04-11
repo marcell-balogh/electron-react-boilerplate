@@ -1,8 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.scss';
-import { Component } from 'react';
 import List from './components/list/List';
-import { Select } from './components/select/Select';
+import Select from './components/select/Select';
 import BrandDetails from './components/brand-details/BrandDetails';
 
 const Welcome = () => {
@@ -18,52 +17,25 @@ const Welcome = () => {
   );
 };
 
-type Props = {
-  props: any;
-};
-
-type State = {
-  directoryPath: string;
-};
-
-export class App extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      directoryPath: '',
-    };
-    this.setPath = this.setPath.bind(this);
-  }
-
-  setPath(path: string) {
-    this.setState({
-      directoryPath: path,
-    });
-  }
-
-  render() {
-    return (
-      <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Welcome />
-                <Select
-                  path={this.state.directoryPath}
-                  setPath={this.setPath}
-                />
-                <div className="divider" />
-                <List path={this.state.directoryPath} />
-              </>
-            }
-          />
-          <Route path="brand">
-            <Route path=":id" element={<BrandDetails />} />
-          </Route>
-        </Routes>
-      </Router>
-    );
-  }
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Welcome />
+              <Select />
+              <div className="divider" />
+              <List />
+            </>
+          }
+        />
+        <Route path="brand">
+          <Route path=":id" element={<BrandDetails />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }

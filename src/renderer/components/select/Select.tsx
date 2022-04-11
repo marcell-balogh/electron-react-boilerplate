@@ -1,6 +1,11 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import FolderIcon from '@mui/icons-material/Folder';
+import { Button } from '@mui/material';
+import { BrandModel } from '../../models/BrandModel';
+import { getBrands } from '../../services/BrandService';
 
-export class Select extends Component<any, { value: string }> {
+class Select extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.openDirectory = this.openDirectory.bind(this);
@@ -12,20 +17,31 @@ export class Select extends Component<any, { value: string }> {
     if (filePathElement) {
       filePathElement.innerText = filePath;
     }
+    this.props.set(getBrands(filePath));
     console.log(filePath);
-    this.props.setPath(filePath);
   }
 
   render() {
     return (
       <div className="select">
-        <button id="btn" type="button" onClick={this.openDirectory}>
+        <Button
+          className="select-button"
+          onClick={this.openDirectory}
+          startIcon={<FolderIcon />}
+          variant="contained"
+        >
           Open Directory
-        </button>
-        <p>
+        </Button>
+        <p className="path">
           Path: <span id="path" />
         </p>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = {
+  set: (payload: BrandModel[]) => ({ type: 'SET_BRANDS', payload }),
+};
+
+export default connect(null, mapDispatchToProps)(Select);

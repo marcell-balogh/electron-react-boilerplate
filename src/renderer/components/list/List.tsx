@@ -1,38 +1,35 @@
-import { useMemo } from 'react';
-import { getBrands } from '../../services/BrandService';
+import { useSelector } from 'react-redux';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import { Button, Grid } from '@mui/material';
 import Brand from '../brand/Brand';
-import { BrandModel } from '../../models/BrandModel';
 import './List.scss';
+import { BrandModel } from '../../models/BrandModel';
 
-type Props = {
-  path: string;
-};
-
-export default function List({ path }: Props) {
-  const brands = useMemo(() => {
-    if (!path) {
-      return [];
-    }
-    console.log('path', path);
-    return getBrands(path);
-  }, [path]);
-
+export default function List() {
+  const brands: BrandModel[] = useSelector((state: BrandModel[]) => state);
   return (
     <>
       <div className="list-header">
-        <h2>Brands</h2>
+        <h2>Brands ({brands.length})</h2>
         <div className="header-buttons">
-          <button type="button">Add brand</button>
-          <button type="button">Edit schema</button>
+          <Button startIcon={<AddIcon />} variant="contained">
+            Add brand
+          </Button>
+          <Button startIcon={<EditIcon />} variant="contained">
+            Edit schema
+          </Button>
         </div>
       </div>
-      {brands && brands.length > 0 && (
-        <ul className="list">
-          {brands.map((brand: BrandModel) => {
-            return <Brand key={brand.name} brand={brand} />;
-          })}
-        </ul>
-      )}
+      <div className="list">
+        {brands && brands.length > 0 && (
+          <Grid container spacing={2}>
+            {brands.map((brand: BrandModel) => {
+              return <Brand key={brand.name} brand={brand} />;
+            })}
+          </Grid>
+        )}
+      </div>
     </>
   );
 }
