@@ -5,9 +5,10 @@ import { Button, Grid } from '@mui/material';
 import Brand from '../brand/Brand';
 import './List.scss';
 import { BrandModel } from '../../models/BrandModel';
+import { Store } from '../../redux/Store';
 
 export default function List() {
-  const brands: BrandModel[] = useSelector((state: BrandModel[]) => state);
+  const brands: BrandModel[] = useSelector((state: Store) => state.brands);
   return (
     <>
       <div className="list-header">
