@@ -5,6 +5,7 @@ import fs from 'fs';
 contextBridge.exposeInMainWorld('electron', {
   fs,
   selectFolder: () => ipcRenderer.invoke('dialog:openDirectory'),
+  selectFile: () => ipcRenderer.invoke('dialog:openFile'),
   ipcRenderer: {
     myPing() {
       ipcRenderer.send('ipc-example', 'ping');

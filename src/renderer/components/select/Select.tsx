@@ -1,52 +1,58 @@
 import { useDispatch, useSelector } from 'react-redux';
 import FolderIcon from '@mui/icons-material/Folder';
-import { Button } from '@mui/material';
-import { BrandModel } from '../../models/BrandModel';
+import { Button, TextField } from '@mui/material';
+import { useState } from 'react';
 import { getBrands } from '../../services/BrandService';
 import { Store } from '../../redux/Store';
+import './Select.scss';
 
 export default function Select() {
+  const [localPath, setLocalPath] = useState('');
   const path = useSelector((state: Store) => state.directoryPath);
   const dispatch = useDispatch();
 
-  const setBrands = (brands: BrandModel[]) => {
+  const updateStore = (directoryPath: string) => {
+    console.log(directoryPath);
+    setLocalPath(directoryPath);
+    dispatch({ type: 'SET_PATH', payload: directoryPath });
     dispatch({
       type: 'SET_BRANDS',
-      payload: brands,
-    });
-  };
-
-  const setPath = (directoryPath: string) => {
-    dispatch({
-      type: 'SET_PATH',
-      payload: directoryPath,
+      payload: getBrands(directoryPath),
     });
   };
 
   const openDirectory = async () => {
-    const filePath = await window.electron.selectFolder();
-    const filePathElement = document.getElementById('path');
-    if (filePathElement) {
-      filePathElement.innerText = filePath;
-    }
-    setBrands(getBrands(filePath));
-    setPath(filePath);
-    console.log(filePath);
+    setLocalPath(await window.electron.selectFolder());
   };
 
   return (
     <div className="select">
+      <div className="select-folder">
+        <TextField
+          className="input"
+          id="outlined-basic"
+          placeholder="Paste a folder path, or choose a folder"
+          variant="outlined"
+          value={path || localPath}
+          onChange={(e) => setLocalPath(e.target.value)}
+        />
+        <Button
+          className="button"
+          color="secondary"
+          variant="contained"
+          startIcon={<FolderIcon />}
+          onClick={openDirectory}
+        >
+          Browse folder
+        </Button>
+      </div>
       <Button
-        className="select-button"
-        onClick={openDirectory}
-        startIcon={<FolderIcon />}
+        className="load-button"
         variant="contained"
+        onClick={() => updateStore(localPath)}
       >
-        Open Directory
+        Load Brands
       </Button>
-      <p className="path">
-        Path: <span id="path">{path}</span>
-      </p>
     </div>
   );
 }

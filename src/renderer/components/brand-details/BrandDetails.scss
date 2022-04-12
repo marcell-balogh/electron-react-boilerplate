@@ -14,3 +14,19 @@
 .textfield {
   margin-bottom: 1rem;
 }
+
+.select-file {
+  display: flex;
+  gap: 0.5rem;
+  flex: 5;
+
+  .input {
+    flex: 1;
+  }
+
+  .button {
+    flex: initial;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+}

@@ -1,0 +1,23 @@
+.select {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.select-folder {
+  display: flex;
+  gap: 0.5rem;
+  flex: 5;
+
+  .input {
+    flex: 1;
+  }
+
+  .button {
+    flex: initial;
+  }
+}
+
+.load-button {
+  flex: initial;
+}

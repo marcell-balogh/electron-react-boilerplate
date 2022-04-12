@@ -25,11 +25,24 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-async function handleFileOpen(): Promise<string> {
+async function handleDirectoryOpen(): Promise<string> {
   const { canceled, filePaths } = await dialog.showOpenDialog(
     <Electron.BrowserWindow>mainWindow,
     {
       properties: ['openDirectory'],
+    }
+  );
+  if (canceled) {
+    return '';
+  }
+  return filePaths[0];
+}
+
+async function handleFileOpen(): Promise<string> {
+  const { canceled, filePaths } = await dialog.showOpenDialog(
+    <Electron.BrowserWindow>mainWindow,
+    {
+      properties: ['openFile'],
     }
   );
   if (canceled) {
@@ -141,7 +154,8 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    ipcMain.handle('dialog:openDirectory', handleFileOpen);
+    ipcMain.handle('dialog:openFile', handleFileOpen);
+    ipcMain.handle('dialog:openDirectory', handleDirectoryOpen);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

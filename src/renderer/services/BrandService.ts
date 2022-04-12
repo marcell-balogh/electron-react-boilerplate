@@ -2,9 +2,9 @@ import { BrandModel } from '../models/BrandModel';
 
 export function createBrand(
   brandName: string,
-  PROJECT_PATH: string
+  DIRECTORY_PATH: string
 ): BrandModel {
-  const brandPath = `${PROJECT_PATH}\\${brandName}`;
+  const brandPath = `${DIRECTORY_PATH}\\${brandName}`;
   const logoPath = `${brandPath}\\icon.png`;
   const raw = window.electron.fs.readFileSync(
     `${brandPath}\\config.json`,
@@ -24,16 +24,46 @@ export function createBrand(
   };
 }
 
-export function getBrands(PROJECT_PATH: string): BrandModel[] {
+export function getBrands(DIRECTORY_PATH: string): BrandModel[] {
   let brands = [];
-  if (PROJECT_PATH) {
-    brands = window.electron.fs.readdirSync(PROJECT_PATH);
-    const brandModels = brands.map((brand: string) => {
-      return createBrand(brand, PROJECT_PATH);
+  if (DIRECTORY_PATH) {
+    try {
+      brands = window.electron.fs.readdirSync(DIRECTORY_PATH);
+    } catch (e) {
+      alert(e);
+    }
+    return brands.map((brand: string) => {
+      return createBrand(brand, DIRECTORY_PATH);
     });
-    console.log('yesss', brandModels);
-    return brandModels;
   }
-  console.log('noooo', []);
   return [];
+}
+
+export function saveBrand(
+  DIRECTORY_PATH: string,
+  newBrand: BrandModel,
+  oldBrand: BrandModel
+) {
+  // overwrite logo
+  if (oldBrand.logoPath !== newBrand.logoPath) {
+    window.electron.fs.writeFileSync(
+      `${DIRECTORY_PATH}\\${newBrand.name}\\icon.png`,
+      window.electron.fs.readFileSync(newBrand.logoPath)
+    );
+  }
+
+  console.log('aaaa');
+  if (oldBrand.name !== newBrand.name) {
+    window.electron.fs.renameSync(
+      `${DIRECTORY_PATH}\\${oldBrand.name}`,
+      `${DIRECTORY_PATH}\\${newBrand.name}`
+    );
+  }
+
+  // overwrite json
+  window.electron.fs.writeFileSync(
+    `${DIRECTORY_PATH}\\${newBrand.name}\\config.json`,
+    JSON.stringify(newBrand.json),
+    'utf8'
+  );
 }

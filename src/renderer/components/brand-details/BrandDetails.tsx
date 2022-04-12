@@ -1,23 +1,58 @@
 import './BrandDetails.scss';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import ReactJson from 'react-json-view';
 import { BrandModel } from '../../models/BrandModel';
 import { Store } from '../../redux/Store';
+import { saveBrand } from '../../services/BrandService';
 
 export default function BrandDetails() {
   const navigate = useNavigate();
   const brands = useSelector((state: Store) => state.brands);
+  const path = useSelector((state: Store) => state.directoryPath);
   const { id } = useParams();
   const brand = brands.find(
     (brandModel: BrandModel) => brandModel.id === Number(id)
   );
+  const [newBrand, setNewBrand] = useState<BrandModel>(
+    brand || {
+      id: NaN,
+      name: '',
+      logoPath: '',
+      json: {},
+    }
+  );
+
+  const openFile = async () => {
+    setNewBrand({
+      ...newBrand,
+      logoPath: await window.electron.selectFile(),
+    });
+  };
+
+  const dispatch = useDispatch();
+  const updateBrand = () => {
+    if (brand && newBrand) {
+      console.log('updateiiing');
+      dispatch({
+        type: 'UPDATE_BRAND',
+        payload: {
+          ...brand,
+          ...newBrand,
+        },
+      });
+      saveBrand(path, newBrand, brand);
+    }
+  };
+
   return (
     <>
-      {brand && (
+      {newBrand && (
         <>
           <div className="header">
             <Button
@@ -27,9 +62,9 @@ export default function BrandDetails() {
             >
               Back
             </Button>
-            <h1 className="header-part">{brand.name}</h1>
+            <h1 className="header-part">{newBrand.name}</h1>
             <Button
-              onClick={() => navigate('/')}
+              onClick={() => updateBrand()}
               startIcon={<SaveIcon />}
               variant="contained"
               color="warning"
@@ -41,39 +76,45 @@ export default function BrandDetails() {
             required
             id="outlined-required"
             label="Id"
-            defaultValue={brand.id}
+            defaultValue={newBrand.id}
             margin="normal"
+            onChange={(e) => setNewBrand({ ...newBrand, id: e.target.value })}
           />
           <TextField
             required
             id="outlined-required"
             label="Name"
-            defaultValue={brand.name}
+            defaultValue={newBrand.name}
             margin="normal"
+            onChange={(e) => setNewBrand({ ...newBrand, name: e.target.value })}
           />
-          <label htmlFor="contained-button-file">
-            <input
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
+          <div className="select-file">
+            <TextField
+              className="input"
+              id="outlined-basic"
+              label="Logo path"
+              variant="outlined"
+              value={newBrand.logoPath}
+              margin="normal"
+              onChange={(e) =>
+                setNewBrand({ ...newBrand, logoPath: e.target.value })
+              }
             />
-            <Button variant="contained" component="span">
-              Upload
+            <Button
+              className="button"
+              color="secondary"
+              variant="contained"
+              startIcon={<FolderIcon />}
+              onClick={openFile}
+            >
+              Browse File
             </Button>
-          </label>
-          <TextField
-            required
-            id="outlined-required"
-            label="Logo path"
-            defaultValue={brand.logoPath}
-            margin="normal"
-          />
+          </div>
           <div className="json">
             <ReactJson
-              src={brand.json}
+              src={newBrand.json}
               displayDataTypes={false}
-              enableClipboard={false}
+              onEdit={(e) => setNewBrand({ ...newBrand, json: e.updated_src })}
             />
           </div>
         </>

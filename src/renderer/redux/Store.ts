@@ -35,13 +35,13 @@ function brandStore(
       };
     case 'SET_BRANDS':
       return {
-        directoryPath: state.directoryPath,
+        ...state,
         brands: action.payload,
       };
     case 'SET_PATH':
       return {
+        ...state,
         directoryPath: action.payload,
-        brands: state.brands,
       };
     default:
       return state;

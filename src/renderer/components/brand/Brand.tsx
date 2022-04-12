@@ -12,7 +12,6 @@ type Props = {
 export default function Brand(props: Props) {
   const navigate = useNavigate();
   const { brand } = props;
-  console.log(brand);
   const primary = {
     fill: brand.json.default.theme.primary,
   };
