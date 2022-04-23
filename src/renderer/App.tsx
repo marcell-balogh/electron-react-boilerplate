@@ -3,6 +3,7 @@ import './App.scss';
 import List from './components/list/List';
 import Select from './components/select/Select';
 import BrandDetails from './components/brand-details/BrandDetails';
+import NewBrand from './components/new-brand/NewBrand';
 
 const Welcome = () => {
   return (
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="brand">
           <Route path=":id" element={<BrandDetails />} />
         </Route>
+        <Route path="new-brand" element={<NewBrand />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,6 @@
 import { BrandModel } from '../models/BrandModel';
 
-export function createBrand(
+export function readBrand(
   brandName: string,
   DIRECTORY_PATH: string
 ): BrandModel {
@@ -33,7 +33,7 @@ export function getBrands(DIRECTORY_PATH: string): BrandModel[] {
       alert(e);
     }
     return brands.map((brand: string) => {
-      return createBrand(brand, DIRECTORY_PATH);
+      return readBrand(brand, DIRECTORY_PATH);
     });
   }
   return [];
@@ -52,7 +52,7 @@ export function saveBrand(
     );
   }
 
-  console.log('aaaa');
+  // overwrite directory name
   if (oldBrand.name !== newBrand.name) {
     window.electron.fs.renameSync(
       `${DIRECTORY_PATH}\\${oldBrand.name}`,
@@ -66,4 +66,11 @@ export function saveBrand(
     JSON.stringify(newBrand.json),
     'utf8'
   );
+}
+
+export function deleteBrand(DIRECTORY_PATH: string, brand: BrandModel) {
+  window.electron.fs.rmSync(`${DIRECTORY_PATH}\\${brand.name}`, {
+    recursive: true,
+    force: true,
+  });
 }

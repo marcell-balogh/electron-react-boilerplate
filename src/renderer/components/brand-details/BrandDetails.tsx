@@ -2,16 +2,22 @@ import './BrandDetails.scss';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextField } from '@mui/material';
+import { Alert, Button, Collapse, IconButton, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
 import ReactJson from 'react-json-view';
-import { BrandModel } from '../../models/BrandModel';
 import { Store } from '../../redux/Store';
+import { BrandModel } from '../../models/BrandModel';
 import { saveBrand } from '../../services/BrandService';
+import DeleteDialog from '../dialog/DeleteDialog';
 
 export default function BrandDetails() {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const brands = useSelector((state: Store) => state.brands);
   const path = useSelector((state: Store) => state.directoryPath);
@@ -35,18 +41,19 @@ export default function BrandDetails() {
     });
   };
 
-  const dispatch = useDispatch();
+  const showAlert = (alertMessage: string) => {
+    setMessage(alertMessage);
+    setOpen(true);
+  };
+
   const updateBrand = () => {
     if (brand && newBrand) {
-      console.log('updateiiing');
+      saveBrand(path, newBrand, brand);
       dispatch({
         type: 'UPDATE_BRAND',
-        payload: {
-          ...brand,
-          ...newBrand,
-        },
+        payload: newBrand,
       });
-      saveBrand(path, newBrand, brand);
+      showAlert('Brand updated successfully!');
     }
   };
 
@@ -63,22 +70,44 @@ export default function BrandDetails() {
               Back
             </Button>
             <h1 className="header-part">{newBrand.name}</h1>
-            <Button
-              onClick={() => updateBrand()}
-              startIcon={<SaveIcon />}
-              variant="contained"
-              color="warning"
-            >
-              Save
-            </Button>
+            <div className="options">
+              <Button
+                onClick={() => updateBrand()}
+                startIcon={<SaveIcon />}
+                variant="contained"
+                color="warning"
+              >
+                Save
+              </Button>
+              <DeleteDialog brandId={brand?.id} />
+            </div>
           </div>
+          <Collapse in={open}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              {message}
+            </Alert>
+          </Collapse>
           <TextField
             required
             id="outlined-required"
             label="Id"
             defaultValue={newBrand.id}
             margin="normal"
-            onChange={(e) => setNewBrand({ ...newBrand, id: e.target.value })}
+            onChange={(e) => setNewBrand({ ...newBrand, id: +e.target.value })}
           />
           <TextField
             required
