@@ -8,7 +8,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import ReactJson from 'react-json-view';
-import { Store } from '../../redux/Store';
+import { Store, updateBrand } from 'renderer/redux/BrandSlice';
 import { BrandModel } from '../../models/BrandModel';
 import { saveBrand } from '../../services/BrandService';
 import DeleteDialog from '../dialog/DeleteDialog';
@@ -19,8 +19,8 @@ export default function BrandDetails() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const brands = useSelector((state: Store) => state.brands);
-  const path = useSelector((state: Store) => state.directoryPath);
+  const brands = useSelector((store: Store) => store.brands);
+  const path = useSelector((store: Store) => store.directoryPath);
   const { id } = useParams();
   const brand = brands.find(
     (brandModel: BrandModel) => brandModel.id === Number(id)
@@ -46,13 +46,10 @@ export default function BrandDetails() {
     setOpen(true);
   };
 
-  const updateBrand = () => {
+  const update = () => {
     if (brand && newBrand) {
       saveBrand(path, newBrand, brand);
-      dispatch({
-        type: 'UPDATE_BRAND',
-        payload: newBrand,
-      });
+      dispatch(updateBrand(newBrand));
       showAlert('Brand updated successfully!');
     }
   };
@@ -72,7 +69,7 @@ export default function BrandDetails() {
             <h1 className="header-part">{newBrand.name}</h1>
             <div className="options">
               <Button
-                onClick={() => updateBrand()}
+                onClick={() => update()}
                 startIcon={<SaveIcon />}
                 variant="contained"
                 color="warning"

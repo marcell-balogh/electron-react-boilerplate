@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import FolderIcon from '@mui/icons-material/Folder';
 import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
+import { setBrands, setPath, Store } from 'renderer/redux/BrandSlice';
 import { getBrands } from '../../services/BrandService';
-import { Store } from '../../redux/Store';
 import './Select.scss';
 
 export default function Select() {
@@ -14,11 +14,8 @@ export default function Select() {
   const updateStore = (directoryPath: string) => {
     console.log(directoryPath);
     setLocalPath(directoryPath);
-    dispatch({ type: 'SET_PATH', payload: directoryPath });
-    dispatch({
-      type: 'SET_BRANDS',
-      payload: getBrands(directoryPath),
-    });
+    dispatch(setPath(directoryPath));
+    dispatch(setBrands(getBrands(directoryPath)));
   };
 
   const openDirectory = async () => {

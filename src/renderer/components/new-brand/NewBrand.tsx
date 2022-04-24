@@ -7,9 +7,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
+import { updateBrand } from 'renderer/redux/BrandSlice';
 import { BrandModel } from '../../models/BrandModel';
-
-// TODO - add dialog
 
 export default function NewBrand() {
   const [open, setOpen] = useState(false);
@@ -36,13 +35,10 @@ export default function NewBrand() {
     setOpen(true);
   };
 
-  const updateBrand = () => {
+  const update = () => {
     if (newBrand) {
       // saveBrand(path, newBrand, brand);
-      dispatch({
-        type: 'UPDATE_BRAND',
-        payload: newBrand,
-      });
+      dispatch(updateBrand(newBrand));
       showAlert('Brand updated successfully!');
     }
   };
@@ -60,7 +56,7 @@ export default function NewBrand() {
         <h1 className="header-part">New Brand</h1>
         <div className="options">
           <Button
-            onClick={() => updateBrand()}
+            onClick={() => update()}
             startIcon={<SaveIcon />}
             variant="contained"
             color="warning"

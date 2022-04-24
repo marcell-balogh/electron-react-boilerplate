@@ -3,18 +3,19 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Store } from 'renderer/redux/BrandSlice';
 import Brand from '../brand/Brand';
 import './List.scss';
 import { BrandModel } from '../../models/BrandModel';
-import { Store } from '../../redux/Store';
 
 export default function List() {
   const navigate = useNavigate();
-  const brands: BrandModel[] = useSelector((state: Store) => state.brands);
+  const brands = useSelector((state: Store) => state.brands);
+
   return (
     <>
       <div className="list-header">
-        <h2>Brands ({brands.length})</h2>
+        <h2>Brands ({brands?.length})</h2>
         <div className="header-buttons">
           <Button
             onClick={() => navigate(`/new-brand/`)}

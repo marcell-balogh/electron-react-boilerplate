@@ -1,29 +1,44 @@
-// import { createSlice } from '@reduxjs/toolkit';
-// import { BrandModel } from '../models/BrandModel';
-//
-// const initialState: BrandModel[] = [];
-//
-// export const brandSlice = createSlice({
-//   name: 'brands',
-//   initialState,
-//   reducers: {
-//     add: (state, action) => {
-//       state.push(action.payload);
-//     },
-//     remove: (state, action) => {
-//       state.splice(action.payload, 1);
-//     },
-//     update: (state, action) => {
-//       state[action.payload.index] = action.payload.brand;
-//     },
-//     set: (state, action) => {
-//       state.concat(action.payload);
-//     },
-//   },
-// });
-//
-// export const { add, remove, update, set } = brandSlice.actions;
-//
-// export const selectBrands = (state: BrandModel[]) => state;
-//
-// export default brandSlice.reducer;
+import { createSlice } from '@reduxjs/toolkit';
+import { BrandModel } from '../models/BrandModel';
+
+export interface Store {
+  directoryPath: string;
+  brands: BrandModel[];
+}
+
+const initialState: Store = {
+  directoryPath: '',
+  brands: [],
+};
+
+export const brandSlice = createSlice({
+  name: 'brands',
+  initialState,
+  reducers: {
+    addBrand(state, action) {
+      state.brands.push(action.payload);
+    },
+    removeBrand(state, action) {
+      state.brands = state.brands.filter(
+        (brand: BrandModel) => brand.id !== action.payload
+      );
+    },
+    updateBrand(state, action) {
+      const index = state.brands.indexOf(action.payload);
+      state.brands[index] = action.payload;
+    },
+    setBrands(state, action) {
+      state.brands = action.payload;
+    },
+    setPath(state, action) {
+      state.directoryPath = action.payload;
+    },
+  },
+});
+
+export const { addBrand, removeBrand, updateBrand, setBrands, setPath } =
+  brandSlice.actions;
+
+export const selectBrands = (store: Store) => store.brands;
+
+export default brandSlice.reducer;

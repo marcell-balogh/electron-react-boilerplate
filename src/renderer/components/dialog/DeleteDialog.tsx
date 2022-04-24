@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Store } from '../../redux/Store';
+import { removeBrand, Store } from 'renderer/redux/BrandSlice';
 import { deleteBrand } from '../../services/BrandService';
 import { BrandModel } from '../../models/BrandModel';
 
@@ -32,10 +32,7 @@ export default function DeleteDialog(props: { brandId: number | undefined }) {
   const handleYes = () => {
     if (brand) {
       deleteBrand(path, brand);
-      dispatch({
-        type: 'REMOVE_BRAND',
-        payload: brand.id,
-      });
+      dispatch(removeBrand(brand.id));
       setOpen(false);
       navigate('/');
     }
