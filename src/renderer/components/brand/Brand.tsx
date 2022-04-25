@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import './Brand.scss';
 import { BrandModel } from '../../models/BrandModel';
+import DeleteDialog from '../dialog/DeleteDialog';
 
 type Props = {
   brand: BrandModel;
@@ -58,15 +59,7 @@ export default function Brand(props: Props) {
           >
             Edit
           </Button>
-          <Button
-            onClick={() => navigate(`/brand/${brand.id}`)}
-            size="small"
-            color="error"
-            startIcon={<DeleteIcon />}
-            variant="contained"
-          >
-            Delete
-          </Button>
+          <DeleteDialog size="small" brandId={brand?.id} />
         </div>
       </div>
     </Grid>

@@ -10,7 +10,10 @@ import { removeBrand, Store } from 'renderer/redux/BrandSlice';
 import { deleteBrand } from '../../services/BrandService';
 import { BrandModel } from '../../models/BrandModel';
 
-export default function DeleteDialog(props: { brandId: number | undefined }) {
+export default function DeleteDialog(props: {
+  brandId: number | undefined;
+  size: '"small" | "medium" | "large" | undefined';
+}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const brands = useSelector((state: Store) => state.brands);
@@ -45,6 +48,7 @@ export default function DeleteDialog(props: { brandId: number | undefined }) {
         startIcon={<DeleteIcon />}
         variant="contained"
         color="error"
+        size={props.size}
       >
         Delete
       </Button>
