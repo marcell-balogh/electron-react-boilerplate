@@ -49,3 +49,21 @@ li {
   height: 1rem;
   width: 1rem;
 }
+
+@media screen and (max-width: 900px) {
+  .brand {
+    flex-direction: column;
+
+    .brand-content {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+
+    .brand-buttons {
+      margin-left: 0;
+      margin-top: 1rem;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+}

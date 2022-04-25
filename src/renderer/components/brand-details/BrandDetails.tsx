@@ -2,15 +2,24 @@ import './BrandDetails.scss';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Button, Collapse, IconButton, TextField } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Collapse,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import ReactJson from 'react-json-view';
 import { Store, updateBrand } from 'renderer/redux/BrandSlice';
+import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { BrandModel } from '../../models/BrandModel';
-import { saveBrand } from '../../services/BrandService';
 import DeleteDialog from '../dialog/DeleteDialog';
 
 export default function BrandDetails() {
@@ -20,7 +29,6 @@ export default function BrandDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const brands = useSelector((store: Store) => store.brands);
-  const path = useSelector((store: Store) => store.directoryPath);
   const { id } = useParams();
   const brand = brands.find(
     (brandModel: BrandModel) => brandModel.id === Number(id)
@@ -31,6 +39,9 @@ export default function BrandDetails() {
       name: '',
       logoPath: '',
       json: {},
+      scheme: '',
+      primaryColor: '',
+      secondaryColor: '',
     }
   );
 
@@ -59,6 +70,41 @@ export default function BrandDetails() {
         })
       );
       showAlert('Brand updated successfully!');
+    }
+  };
+
+  const setColor = (color: string, mode: string) => {
+    if (mode === 'primary') {
+      const newJson = {
+        default: {
+          ...newBrand.json.default,
+          theme: {
+            ...newBrand.json.default.theme,
+            primary: color,
+          },
+        },
+      };
+      setNewBrand({
+        ...newBrand,
+        primaryColor: color,
+        json: newJson,
+      });
+    }
+    if (mode === 'secondary') {
+      const newJson = {
+        default: {
+          ...newBrand.json.default,
+          theme: {
+            ...newBrand.json.default.theme,
+            secondary: color,
+          },
+        },
+      };
+      setNewBrand({
+        ...newBrand,
+        secondaryColor: color,
+        json: newJson,
+      });
     }
   };
 
@@ -143,6 +189,68 @@ export default function BrandDetails() {
             >
               Browse File
             </Button>
+          </div>
+          <div className="color-picker">
+            <div className="scheme">
+              <InputLabel id="scheme-select-label">Scheme</InputLabel>
+              <Select
+                labelId="scheme-select-label"
+                id="select"
+                value={newBrand.scheme}
+                label="Scheme"
+                onChange={(e) => {
+                  const newJson = {
+                    default: {
+                      ...newBrand.json.default,
+                      theme: {
+                        ...newBrand.json.default.theme,
+                        scheme: e.target.value,
+                      },
+                    },
+                  };
+                  setNewBrand({
+                    ...newBrand,
+                    scheme: e.target.value,
+                    json: newJson,
+                  });
+                }}
+              >
+                <MenuItem value="primary">Primary</MenuItem>
+                <MenuItem value="secondary">Secondary</MenuItem>
+              </Select>
+            </div>
+            <div className="primary">
+              <InputLabel>Primary color</InputLabel>
+              <HexColorPicker
+                color={newBrand?.primaryColor}
+                onChange={(color) => {
+                  setColor(color, 'primary');
+                }}
+              />
+              <HexColorInput
+                color={newBrand?.primaryColor}
+                onChange={(color) => {
+                  setColor(color, 'primary');
+                }}
+              />
+            </div>
+            {newBrand.scheme === 'primary' && (
+              <div className="secondary">
+                <InputLabel>Secondary color</InputLabel>
+                <HexColorPicker
+                  color={newBrand?.secondaryColor}
+                  onChange={(color) => {
+                    setColor(color, 'secondary');
+                  }}
+                />
+                <HexColorInput
+                  color={newBrand?.secondaryColor}
+                  onChange={(color) => {
+                    setColor(color, 'secondary');
+                  }}
+                />
+              </div>
+            )}
           </div>
           <div className="json">
             <ReactJson

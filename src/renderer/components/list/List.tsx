@@ -1,16 +1,23 @@
-import { useSelector } from 'react-redux';
+import './List.scss';
+
+import { Button, Grid } from '@mui/material';
+
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Grid } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { Store } from 'renderer/redux/BrandSlice';
+import { brandStore } from 'renderer/redux/Store';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Brand from '../brand/Brand';
-import './List.scss';
 import { BrandModel } from '../../models/BrandModel';
 
 export default function List() {
   const navigate = useNavigate();
-  const brands = useSelector((state: Store) => state.brands);
+  const brands = useSelector(() => {
+    console.log('Refressshinggg');
+    console.log(brandStore.getState().brands);
+    return brandStore.getState().brands;
+  });
 
   return (
     <>
@@ -18,7 +25,7 @@ export default function List() {
         <h2>Brands ({brands?.length})</h2>
         <div className="header-buttons">
           <Button
-            onClick={() => navigate(`/new-brand/`)}
+            onClick={() => navigate(`/new-brand`)}
             startIcon={<AddIcon />}
             variant="contained"
           >

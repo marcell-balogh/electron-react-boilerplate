@@ -20,6 +20,9 @@ export function readBrand(
     id: json.default.clubId,
     name: brandName,
     logoPath,
+    scheme: json.default.theme.scheme,
+    primaryColor: json.default.theme.primary,
+    secondaryColor: json.default.theme.secondary,
     json,
   };
 }
@@ -63,7 +66,7 @@ export function saveBrand(
   // overwrite json
   window.electron.fs.writeFileSync(
     `${DIRECTORY_PATH}\\${newBrand.name}\\config.json`,
-    JSON.stringify(newBrand.json),
+    JSON.stringify(newBrand.json, null, 2),
     'utf8'
   );
 }

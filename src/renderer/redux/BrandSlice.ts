@@ -34,7 +34,9 @@ export const brandSlice = createSlice({
         ...action.payload.newBrand,
         logoPath: action.payload.oldBrand.logoPath,
       };
-      const index = state.brands.indexOf(action.payload.oldBrand);
+      const index = state.brands.findIndex(
+        (brand) => brand.id === action.payload.oldBrand.id
+      );
       state.brands[index] = newBrand;
     },
     setBrands(state, action) {

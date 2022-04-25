@@ -35,3 +35,29 @@
   display: flex;
   gap: 1rem;
 }
+
+.color-picker {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0;
+
+  & input {
+    display: block;
+    box-sizing: border-box;
+    width: 90px;
+    margin: 20px 55px 0;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #eee;
+    outline: none;
+    font: inherit;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  & input:focus {
+    border-color: #4298ef;
+  }
+}
