@@ -354,6 +354,7 @@ export default function BrandDetails() {
             </div>
           </div>
           <div className="json">
+            <InputLabel>Json</InputLabel>
             <ReactJson
               src={newBrand.json}
               displayDataTypes={false}
