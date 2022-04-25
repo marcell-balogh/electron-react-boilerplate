@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   Button,
+  Checkbox,
   Collapse,
+  FormControlLabel,
   IconButton,
   InputLabel,
   MenuItem,
@@ -251,6 +253,99 @@ export default function BrandDetails() {
                 />
               </div>
             )}
+          </div>
+          <div>
+            <InputLabel>Features</InputLabel>
+            <div className="features">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={newBrand.json.default.features.fundraiser}
+                    onChange={(e) =>
+                      setNewBrand({
+                        ...newBrand,
+                        json: {
+                          default: {
+                            ...newBrand.json.default,
+                            features: {
+                              ...newBrand.json.default.features,
+                              fundraiser: e.target.checked,
+                            },
+                          },
+                        },
+                      })
+                    }
+                  />
+                }
+                label="Fundraiser"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={newBrand.json.default.features.tickets}
+                    onChange={(e) =>
+                      setNewBrand({
+                        ...newBrand,
+                        json: {
+                          default: {
+                            ...newBrand.json.default,
+                            features: {
+                              ...newBrand.json.default.features,
+                              tickets: e.target.checked,
+                            },
+                          },
+                        },
+                      })
+                    }
+                  />
+                }
+                label="Tickets"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={newBrand.json.default.features.membership}
+                    onChange={(e) =>
+                      setNewBrand({
+                        ...newBrand,
+                        json: {
+                          default: {
+                            ...newBrand.json.default,
+                            features: {
+                              ...newBrand.json.default.features,
+                              membership: e.target.checked,
+                            },
+                          },
+                        },
+                      })
+                    }
+                  />
+                }
+                label="Membership"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={newBrand.json.default.features.limitFundraisers}
+                    onChange={(e) =>
+                      setNewBrand({
+                        ...newBrand,
+                        json: {
+                          default: {
+                            ...newBrand.json.default,
+                            features: {
+                              ...newBrand.json.default.features,
+                              limitFundraisers: e.target.checked,
+                            },
+                          },
+                        },
+                      })
+                    }
+                  />
+                }
+                label="Limit Fundraisers"
+              />
+            </div>
           </div>
           <div className="json">
             <ReactJson
