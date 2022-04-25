@@ -50,6 +50,11 @@ li {
   width: 1rem;
 }
 
+.brand-scheme {
+  margin-bottom: 0.2rem;
+  font-style: italic;
+}
+
 @media screen and (max-width: 900px) {
   .brand {
     flex-direction: column;

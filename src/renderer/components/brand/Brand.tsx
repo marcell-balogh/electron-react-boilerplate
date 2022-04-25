@@ -29,20 +29,22 @@ export default function Brand(props: Props) {
             {brand.name}
           </h3>
           <p className="brand-theme">
-            Schema: {brand.json.default.theme.scheme}
+            <div className="brand-scheme">
+              {brand.json.default.theme.scheme}
+            </div>
           </p>
           <p className="brand-theme">
             <svg width="12" height="12">
               <rect width="12" height="12" style={primary} />
             </svg>{' '}
-            - Primary {brand.json.default.theme.primary}
+            {brand.json.default.theme.primary}
           </p>
           {brand.json.default.theme.scheme === 'primary' && (
             <p className="brand-theme">
               <svg width="12" height="12">
                 <rect width="12" height="12" style={secondary} />
               </svg>{' '}
-              - Secondary {brand.json.default.theme.secondary}
+              {brand.json.default.theme.secondary}
             </p>
           )}
         </div>
