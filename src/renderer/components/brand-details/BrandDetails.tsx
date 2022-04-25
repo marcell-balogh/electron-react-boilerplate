@@ -161,6 +161,7 @@ export default function BrandDetails() {
             defaultValue={newBrand.id}
             margin="normal"
             onChange={(e) => setNewBrand({ ...newBrand, id: +e.target.value })}
+            disabled
           />
           <TextField
             required
@@ -170,27 +171,32 @@ export default function BrandDetails() {
             margin="normal"
             onChange={(e) => setNewBrand({ ...newBrand, name: e.target.value })}
           />
-          <div className="select-file">
-            <TextField
-              className="input"
-              id="outlined-basic"
-              label="Logo path"
-              variant="outlined"
-              value={newBrand.logoPath}
-              margin="normal"
-              onChange={(e) =>
-                setNewBrand({ ...newBrand, logoPath: e.target.value })
-              }
-            />
-            <Button
-              className="button"
-              color="secondary"
-              variant="contained"
-              startIcon={<FolderIcon />}
-              onClick={openFile}
-            >
-              Browse File
-            </Button>
+          <div className="img">
+            <div className="logo">
+              <img src={`file://${newBrand.logoPath}`} alt={newBrand.name} />
+            </div>
+            <div className="select-file">
+              <TextField
+                className="input"
+                id="outlined-basic"
+                label="Logo path"
+                variant="outlined"
+                value={newBrand.logoPath}
+                margin="normal"
+                onChange={(e) =>
+                  setNewBrand({ ...newBrand, logoPath: e.target.value })
+                }
+              />
+              <Button
+                className="button"
+                color="secondary"
+                variant="contained"
+                startIcon={<FolderIcon />}
+                onClick={openFile}
+              >
+                Browse File
+              </Button>
+            </div>
           </div>
           <div className="color-picker">
             <div className="scheme">
