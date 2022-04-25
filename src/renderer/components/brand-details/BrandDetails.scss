@@ -65,10 +65,18 @@
     font: inherit;
     text-transform: uppercase;
     text-align: center;
-  }
 
-  & input:focus {
-    border-color: #4298ef;
+    &:focus {
+      border-color: #1976df;
+      box-shadow: 0 0 0 1.5px #1976df;
+    }
+    &:hover {
+      border-color: #000;
+    }
+    &:hover:focus {
+      border-color: #1976df;
+      box-shadow: 0 0 0 1.5px #1976df;
+    }
   }
 }
 

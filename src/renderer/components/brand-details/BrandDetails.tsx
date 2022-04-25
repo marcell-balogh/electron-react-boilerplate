@@ -132,7 +132,7 @@ export default function BrandDetails() {
               >
                 Save
               </Button>
-              <DeleteDialog brandId={brand?.id} />
+              <DeleteDialog brandId={brand?.id} size="medium" />
             </div>
           </div>
           <Collapse in={open}>
