@@ -48,8 +48,16 @@ export default function BrandDetails() {
 
   const update = () => {
     if (brand && newBrand) {
-      saveBrand(path, newBrand, brand);
-      dispatch(updateBrand(newBrand));
+      setNewBrand({
+        ...newBrand,
+        logoPath: brand.logoPath,
+      });
+      dispatch(
+        updateBrand({
+          oldBrand: brand,
+          newBrand,
+        })
+      );
       showAlert('Brand updated successfully!');
     }
   };

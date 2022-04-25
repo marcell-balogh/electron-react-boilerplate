@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { saveBrand } from 'renderer/services/BrandService';
 import { BrandModel } from '../models/BrandModel';
 
 export interface Store {
@@ -24,8 +25,17 @@ export const brandSlice = createSlice({
       );
     },
     updateBrand(state, action) {
-      const index = state.brands.indexOf(action.payload);
-      state.brands[index] = action.payload;
+      saveBrand(
+        state.directoryPath,
+        action.payload.newBrand,
+        action.payload.oldBrand
+      );
+      const newBrand: BrandModel = {
+        ...action.payload.newBrand,
+        logoPath: action.payload.oldBrand.logoPath,
+      };
+      const index = state.brands.indexOf(action.payload.oldBrand);
+      state.brands[index] = newBrand;
     },
     setBrands(state, action) {
       state.brands = action.payload;
