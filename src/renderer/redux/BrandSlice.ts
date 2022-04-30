@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { saveBrand } from 'renderer/services/BrandService';
+import { createBrand, saveBrand } from 'renderer/services/BrandService';
 import { BrandModel } from '../models/BrandModel';
 
 export interface Store {
@@ -17,6 +17,7 @@ export const brandSlice = createSlice({
   initialState,
   reducers: {
     addBrand(state, action) {
+      createBrand(state.directoryPath, action.payload);
       state.brands.push(action.payload);
     },
     removeBrand(state, action) {

@@ -4,7 +4,6 @@ import { Button, Grid } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import { Store } from 'renderer/redux/BrandSlice';
 import { brandStore } from 'renderer/redux/Store';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -13,11 +12,7 @@ import { BrandModel } from '../../models/BrandModel';
 
 export default function List() {
   const navigate = useNavigate();
-  const brands = useSelector(() => {
-    console.log('Refressshinggg');
-    console.log(brandStore.getState().brands);
-    return brandStore.getState().brands;
-  });
+  const brands = useSelector(() => brandStore.getState().brands);
 
   return (
     <>

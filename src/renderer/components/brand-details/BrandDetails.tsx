@@ -36,15 +36,7 @@ export default function BrandDetails() {
     (brandModel: BrandModel) => brandModel.id === Number(id)
   );
   const [newBrand, setNewBrand] = useState<BrandModel>(
-    brand || {
-      id: NaN,
-      name: '',
-      logoPath: '',
-      json: {},
-      scheme: '',
-      primaryColor: '',
-      secondaryColor: '',
-    }
+    brand || ({} as BrandModel)
   );
 
   const openFile = async () => {

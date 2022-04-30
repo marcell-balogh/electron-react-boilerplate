@@ -12,7 +12,7 @@ import { BrandModel } from '../../models/BrandModel';
 
 export default function DeleteDialog(props: {
   brandId: number | undefined;
-  size: '"small" | "medium" | "large" | undefined';
+  size: 'small' | 'medium' | 'large' | undefined;
 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();

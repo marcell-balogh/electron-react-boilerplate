@@ -21,7 +21,7 @@ li {
   }
 
   .brand-content {
-    margin-left: 2rem;
+    margin: 0 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -60,7 +60,7 @@ li {
     flex-direction: column;
 
     .brand-content {
-      margin-left: 0;
+      margin: 0;
       margin-top: 1rem;
     }
 

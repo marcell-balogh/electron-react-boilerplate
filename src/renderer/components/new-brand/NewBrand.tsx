@@ -2,12 +2,24 @@ import '../brand-details/BrandDetails.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Alert, Button, Collapse, IconButton, TextField } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Collapse,
+  FormControlLabel,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import { updateBrand } from 'renderer/redux/BrandSlice';
+import { HexColorPicker, HexColorInput } from 'react-colorful';
+import { addBrand } from 'renderer/redux/BrandSlice';
 import { BrandModel } from '../../models/BrandModel';
 
 export default function NewBrand() {
@@ -21,6 +33,15 @@ export default function NewBrand() {
     name: '',
     logoPath: '',
     json: {},
+    primaryColor: '',
+    secondaryColor: '',
+    scheme: '',
+    features: {
+      fundraiser: false,
+      tickets: false,
+      membership: false,
+      limitFundraisers: false,
+    },
   });
 
   const openFile = async () => {
@@ -37,9 +58,23 @@ export default function NewBrand() {
 
   const update = () => {
     if (newBrand) {
-      // saveBrand(path, newBrand, brand);
-      dispatch(updateBrand(newBrand));
-      showAlert('Brand updated successfully!');
+      dispatch(addBrand(newBrand));
+      showAlert('Brand saved successfully!');
+    }
+  };
+
+  const setColor = (color: string, mode: string) => {
+    if (mode === 'primary') {
+      setNewBrand({
+        ...newBrand,
+        primaryColor: color,
+      });
+    }
+    if (mode === 'secondary') {
+      setNewBrand({
+        ...newBrand,
+        secondaryColor: color,
+      });
     }
   };
 
@@ -120,6 +155,131 @@ export default function NewBrand() {
           Browse File
         </Button>
       </div>
+      <div className="color-picker">
+        <div className="scheme">
+          <InputLabel id="scheme-select-label">Scheme</InputLabel>
+          <Select
+            labelId="scheme-select-label"
+            id="select"
+            value={newBrand.scheme}
+            label="Scheme"
+            onChange={(e) =>
+              setNewBrand({
+                ...newBrand,
+                scheme: e.target.value,
+              })
+            }
+          >
+            <MenuItem value="primary">Primary</MenuItem>
+            <MenuItem value="secondary">Secondary</MenuItem>
+          </Select>
+        </div>
+        <div className="primary">
+          <InputLabel>Primary color</InputLabel>
+          <HexColorPicker
+            color={newBrand?.primaryColor}
+            onChange={(color) => {
+              setColor(color, 'primary');
+            }}
+          />
+          <HexColorInput
+            color={newBrand?.primaryColor}
+            onChange={(color) => {
+              setColor(color, 'primary');
+            }}
+          />
+        </div>
+        {newBrand.scheme === 'primary' && (
+          <div className="secondary">
+            <InputLabel>Secondary color</InputLabel>
+            <HexColorPicker
+              color={newBrand?.secondaryColor}
+              onChange={(color) => {
+                setColor(color, 'secondary');
+              }}
+            />
+            <HexColorInput
+              color={newBrand?.secondaryColor}
+              onChange={(color) => {
+                setColor(color, 'secondary');
+              }}
+            />
+          </div>
+        )}
+      </div>
+      <div>
+        <InputLabel>Features</InputLabel>
+        <div className="features">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={newBrand.features.fundraiser}
+                onChange={(e) =>
+                  setNewBrand({
+                    ...newBrand,
+                    features: {
+                      ...newBrand.features,
+                      fundraiser: e.target.checked,
+                    },
+                  })
+                }
+              />
+            }
+            label="Fundraiser"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={newBrand.features.tickets}
+                onChange={(e) =>
+                  setNewBrand({
+                    ...newBrand,
+                    features: {
+                      ...newBrand.features,
+                      tickets: e.target.checked,
+                    },
+                  })
+                }
+              />
+            }
+            label="Tickets"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={newBrand.features.membership}
+                onChange={(e) =>
+                  setNewBrand({
+                    ...newBrand,
+                    features: {
+                      ...newBrand.features,
+                      membership: e.target.checked,
+                    },
+                  })
+                }
+              />
+            }
+            label="Membership"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={newBrand.features.limitFundraisers}
+                onChange={(e) =>
+                  setNewBrand({
+                    ...newBrand,
+                    features: {
+                      ...newBrand.features,
+                      limitFundraisers: e.target.checked,
+                    },
+                  })
+                }
+              />
+            }
+            label="Limit Fundraisers"
+          />
+        </div>
+      </div>
       <TextField
         required
         id="outlined-required"
@@ -128,6 +288,7 @@ export default function NewBrand() {
         multiline
         rows={10}
         maxRows="infinity"
+        onChange={(e) => setNewBrand({ ...newBrand, json: e.target.value })}
       />
     </>
   );

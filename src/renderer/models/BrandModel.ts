@@ -5,6 +5,12 @@ export interface BrandModel {
   scheme: string;
   primaryColor: string;
   secondaryColor: string;
+  features: {
+    fundraiser: boolean;
+    tickets: boolean;
+    membership: boolean;
+    limitFundraisers: boolean;
+  };
   json: any;
 }
 
