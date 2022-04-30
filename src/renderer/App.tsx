@@ -1,9 +1,11 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './App.scss';
 import List from './components/list/List';
 import Select from './components/select/Select';
 import BrandDetails from './components/brand-details/BrandDetails';
 import NewBrand from './components/new-brand/NewBrand';
+import { setTemplateJson } from './redux/BrandSlice';
 
 const Welcome = () => {
   return (
@@ -19,6 +21,8 @@ const Welcome = () => {
 };
 
 export default function App() {
+  const dispatch = useDispatch();
+  dispatch(setTemplateJson());
   return (
     <Router>
       <Routes>

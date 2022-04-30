@@ -1,7 +1,7 @@
 import '../brand-details/BrandDetails.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   Button,
@@ -19,12 +19,14 @@ import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
-import { addBrand } from 'renderer/redux/BrandSlice';
+import JSONInput from 'react-json-editor-ajrm';
+import { addBrand, Store } from 'renderer/redux/BrandSlice';
 import { BrandModel } from '../../models/BrandModel';
 
 export default function NewBrand() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const templateJson = useSelector((state: Store) => state.templateJson);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,10 +34,10 @@ export default function NewBrand() {
     id: NaN,
     name: '',
     logoPath: '',
-    json: {},
-    primaryColor: '',
-    secondaryColor: '',
-    scheme: '',
+    json: templateJson,
+    primaryColor: '#000000',
+    secondaryColor: '#FFFFFF',
+    scheme: 'primary',
     features: {
       fundraiser: false,
       tickets: false,
@@ -280,15 +282,12 @@ export default function NewBrand() {
           />
         </div>
       </div>
-      <TextField
-        required
-        id="outlined-required"
-        label="json"
-        margin="normal"
-        multiline
-        rows={10}
-        maxRows="infinity"
-        onChange={(e) => setNewBrand({ ...newBrand, json: e.target.value })}
+      <InputLabel>Json</InputLabel>
+      <JSONInput
+        theme="light_mitsuketa_tribute"
+        placeholder={newBrand.json}
+        width="100%"
+        onChange={(json: any) => setNewBrand({ ...newBrand, json })}
       />
     </>
   );

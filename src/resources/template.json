@@ -1,0 +1,25 @@
+{
+  "default": {
+    "apiUrl": "",
+    "demoUrl": "",
+    "clubId": 0,
+    "TermsAndConditionsUrl": "",
+    "TermsAndConditionsUrlApple": "",
+    "PrivacyPolicyUrl": "",
+    "FundraiserRulesApple": "",
+    "FundraiserRulesGoogle": "",
+    "welcomeText": "",
+    "theme": {
+      "scheme": "primary",
+      "primary": "#000000",
+      "secondary": "#FFFFFF"
+    },
+    "features": {
+      "fundraiser": false,
+      "tickets": false,
+      "membership": false,
+      "limitFundraisers": false
+    },
+    "suffix": "template"
+  }
+}

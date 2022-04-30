@@ -1,15 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createBrand, saveBrand } from 'renderer/services/BrandService';
+import {
+  createBrand,
+  saveBrand,
+  getTemplateJson,
+} from 'renderer/services/BrandService';
 import { BrandModel } from '../models/BrandModel';
 
 export interface Store {
   directoryPath: string;
   brands: BrandModel[];
+  templateJson: any;
 }
 
 const initialState: Store = {
   directoryPath: '',
   brands: [],
+  templateJson: {},
 };
 
 export const brandSlice = createSlice({
@@ -46,11 +52,21 @@ export const brandSlice = createSlice({
     setPath(state, action) {
       state.directoryPath = action.payload;
     },
+    setTemplateJson(state) {
+      state.templateJson = getTemplateJson();
+      console.warn('json set', state.templateJson);
+    },
   },
 });
 
-export const { addBrand, removeBrand, updateBrand, setBrands, setPath } =
-  brandSlice.actions;
+export const {
+  addBrand,
+  removeBrand,
+  updateBrand,
+  setBrands,
+  setPath,
+  setTemplateJson,
+} = brandSlice.actions;
 
 export const selectBrands = (store: Store) => store.brands;
 

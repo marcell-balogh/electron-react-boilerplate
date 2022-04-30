@@ -113,3 +113,17 @@ export function createBrand(DIRECTORY_PATH: string, brand: BrandModel) {
     'utf8'
   );
 }
+
+export function getTemplateJson() {
+  const raw = window.electron.fs.readFileSync(
+    'src/resources/template.json',
+    'utf8'
+  );
+  let json;
+  try {
+    json = JSON.parse(raw);
+  } catch (e) {
+    alert(e);
+  }
+  return json;
+}
