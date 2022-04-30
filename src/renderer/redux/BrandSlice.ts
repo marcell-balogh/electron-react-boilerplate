@@ -23,8 +23,24 @@ export const brandSlice = createSlice({
   initialState,
   reducers: {
     addBrand(state, action) {
+      const newBrand: BrandModel = action.payload;
+      newBrand.json = {
+        default: {
+          ...newBrand.json.default,
+          clubId: newBrand.id,
+          theme: {
+            scheme: newBrand.scheme,
+            primary: newBrand.primaryColor,
+            secondary: newBrand.secondaryColor,
+          },
+          features: {
+            ...newBrand.features,
+          },
+        },
+      };
       createBrand(state.directoryPath, action.payload);
-      state.brands.push(action.payload);
+      newBrand.logoPath = `${state.directoryPath}\\${action.payload.name}\\icon.png`;
+      state.brands.push(newBrand);
     },
     removeBrand(state, action) {
       state.brands = state.brands.filter(
