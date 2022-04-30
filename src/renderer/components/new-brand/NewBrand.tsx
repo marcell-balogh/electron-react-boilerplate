@@ -126,7 +126,19 @@ export default function NewBrand() {
         id="outlined-required"
         label="Id"
         margin="normal"
-        onChange={(e) => setNewBrand({ ...newBrand, id: +e.target.value })}
+        onChange={(e) => {
+          const newJson = {
+            default: {
+              ...newBrand.json.default,
+              clubId: +e.target.value,
+            },
+          };
+          setNewBrand({
+            ...newBrand,
+            id: +e.target.value,
+            json: newJson,
+          });
+        }}
       />
       <TextField
         required
@@ -165,12 +177,22 @@ export default function NewBrand() {
             id="select"
             value={newBrand.scheme}
             label="Scheme"
-            onChange={(e) =>
+            onChange={(e) => {
+              const newJson = {
+                default: {
+                  ...newBrand.json.default,
+                  theme: {
+                    ...newBrand.json.default.theme,
+                    scheme: e.target.value,
+                  },
+                },
+              };
               setNewBrand({
                 ...newBrand,
                 scheme: e.target.value,
-              })
-            }
+                json: newJson,
+              });
+            }}
           >
             <MenuItem value="primary">Primary</MenuItem>
             <MenuItem value="secondary">Secondary</MenuItem>
@@ -223,6 +245,15 @@ export default function NewBrand() {
                       ...newBrand.features,
                       fundraiser: e.target.checked,
                     },
+                    json: {
+                      default: {
+                        ...newBrand.json.default,
+                        features: {
+                          ...newBrand.json.default.features,
+                          fundraiser: e.target.checked,
+                        },
+                      },
+                    },
                   })
                 }
               />
@@ -239,6 +270,15 @@ export default function NewBrand() {
                     features: {
                       ...newBrand.features,
                       tickets: e.target.checked,
+                    },
+                    json: {
+                      default: {
+                        ...newBrand.json.default,
+                        features: {
+                          ...newBrand.json.default.features,
+                          tickets: e.target.checked,
+                        },
+                      },
                     },
                   })
                 }
@@ -257,6 +297,15 @@ export default function NewBrand() {
                       ...newBrand.features,
                       membership: e.target.checked,
                     },
+                    json: {
+                      default: {
+                        ...newBrand.json.default,
+                        features: {
+                          ...newBrand.json.default.features,
+                          membership: e.target.checked,
+                        },
+                      },
+                    },
                   })
                 }
               />
@@ -273,6 +322,15 @@ export default function NewBrand() {
                     features: {
                       ...newBrand.features,
                       limitFundraisers: e.target.checked,
+                    },
+                    json: {
+                      default: {
+                        ...newBrand.json.default,
+                        features: {
+                          ...newBrand.json.default.features,
+                          limitFundraisers: e.target.checked,
+                        },
+                      },
                     },
                   })
                 }
