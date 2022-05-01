@@ -232,6 +232,9 @@ export default function BrandDetails() {
                 onChange={(color) => {
                   setColor(color, 'primary');
                 }}
+                style={{
+                  borderLeft: `1rem solid ${newBrand?.primaryColor}`,
+                }}
               />
             </div>
             {newBrand.scheme === 'primary' && (
@@ -247,6 +250,9 @@ export default function BrandDetails() {
                   color={newBrand?.secondaryColor}
                   onChange={(color) => {
                     setColor(color, 'secondary');
+                  }}
+                  style={{
+                    borderLeft: `1rem solid ${newBrand?.secondaryColor}`,
                   }}
                 />
               </div>

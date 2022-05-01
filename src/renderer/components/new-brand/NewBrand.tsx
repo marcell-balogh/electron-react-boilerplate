@@ -147,27 +147,34 @@ export default function NewBrand() {
         margin="normal"
         onChange={(e) => setNewBrand({ ...newBrand, name: e.target.value })}
       />
-      <div className="select-file">
-        <TextField
-          className="input"
-          id="outlined-basic"
-          label="Logo path"
-          variant="outlined"
-          value={newBrand.logoPath}
-          margin="normal"
-          onChange={(e) =>
-            setNewBrand({ ...newBrand, logoPath: e.target.value })
-          }
-        />
-        <Button
-          className="button"
-          color="secondary"
-          variant="contained"
-          startIcon={<FolderIcon />}
-          onClick={openFile}
-        >
-          Browse File
-        </Button>
+      <div className="img">
+        <div className="logo">
+          {newBrand.logoPath && (
+            <img src={`file://${newBrand.logoPath}`} alt={newBrand.name} />
+          )}
+        </div>
+        <div className="select-file">
+          <TextField
+            className="input"
+            id="outlined-basic"
+            label="Logo path"
+            variant="outlined"
+            value={newBrand.logoPath}
+            margin="normal"
+            onChange={(e) =>
+              setNewBrand({ ...newBrand, logoPath: e.target.value })
+            }
+          />
+          <Button
+            className="button"
+            color="secondary"
+            variant="contained"
+            startIcon={<FolderIcon />}
+            onClick={openFile}
+          >
+            Browse File
+          </Button>
+        </div>
       </div>
       <div className="color-picker">
         <div className="scheme">
@@ -211,6 +218,9 @@ export default function NewBrand() {
             onChange={(color) => {
               setColor(color, 'primary');
             }}
+            style={{
+              borderLeft: `1rem solid ${newBrand?.primaryColor}`,
+            }}
           />
         </div>
         {newBrand.scheme === 'primary' && (
@@ -226,6 +236,9 @@ export default function NewBrand() {
               color={newBrand?.secondaryColor}
               onChange={(color) => {
                 setColor(color, 'secondary');
+              }}
+              style={{
+                borderLeft: `1rem solid ${newBrand?.secondaryColor}`,
               }}
             />
           </div>

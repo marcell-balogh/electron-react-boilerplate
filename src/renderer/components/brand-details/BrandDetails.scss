@@ -54,30 +54,20 @@
   margin: 1rem 0;
 
   & input {
+    border: 1px solid #ddd;
+    border-left: 1rem solid #ddd;
     display: block;
     box-sizing: border-box;
     width: 90px;
     margin: 20px 55px 0;
     padding: 6px;
-    border: 1px solid #ddd;
     border-radius: 4px;
     background: #eee;
+    mix-blend-mode: difference;
     outline: none;
     font: inherit;
     text-transform: uppercase;
     text-align: center;
-
-    &:focus {
-      border-color: #1976df;
-      box-shadow: 0 0 0 1.5px #1976df;
-    }
-    &:hover {
-      border-color: #000;
-    }
-    &:hover:focus {
-      border-color: #1976df;
-      box-shadow: 0 0 0 1.5px #1976df;
-    }
   }
 }
 

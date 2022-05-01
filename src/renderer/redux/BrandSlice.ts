@@ -70,7 +70,6 @@ export const brandSlice = createSlice({
     },
     setTemplateJson(state) {
       state.templateJson = getTemplateJson();
-      console.warn('json set', state.templateJson);
     },
   },
 });
