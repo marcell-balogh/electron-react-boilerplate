@@ -22,7 +22,10 @@ export default function Brand(props: Props) {
     <Grid item xs={6}>
       <div className="brand">
         <div className="brand-logo">
-          <img src={`file://${brand.logoPath}`} alt={brand.name} />
+          <img
+            src={`file://${brand.logoPath}?${Date.now()}`}
+            alt={brand.name}
+          />
         </div>
         <div className="brand-content">
           <h3 id={brand.id.toString()} className="brand-title">

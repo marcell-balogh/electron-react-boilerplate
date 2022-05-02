@@ -41,7 +41,7 @@ export default function BrandDetails() {
       id: NaN,
       name: '',
       logoPath: '',
-      json: templateJson,
+      json: {},
       primaryColor: '#000000',
       secondaryColor: '#FFFFFF',
       scheme: 'primary',
@@ -180,7 +180,10 @@ export default function BrandDetails() {
           />
           <div className="img">
             <div className="logo">
-              <img src={`file://${newBrand.logoPath}`} alt={newBrand.name} />
+              <img
+                src={`file://${newBrand.logoPath}?${Date.now()}`}
+                alt={newBrand.name}
+              />
             </div>
             <div className="select-file">
               <TextField

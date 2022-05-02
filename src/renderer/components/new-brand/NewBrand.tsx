@@ -151,7 +151,10 @@ export default function NewBrand() {
       <div className="img">
         <div className="logo">
           {newBrand.logoPath && (
-            <img src={`file://${newBrand.logoPath}`} alt={newBrand.name} />
+            <img
+              src={`file://${newBrand.logoPath}?${Date.now()}`}
+              alt={newBrand.name}
+            />
           )}
         </div>
         <div className="select-file">
