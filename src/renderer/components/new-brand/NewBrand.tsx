@@ -21,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { HexColorPicker, HexColorInput } from 'react-colorful';
 import JSONInput from 'react-json-editor-ajrm';
 import { addBrand, Store } from 'renderer/redux/BrandSlice';
+import { JsonValues } from 'renderer/models/JsonValues';
 import { BrandModel } from '../../models/BrandModel';
 
 export default function NewBrand() {
@@ -358,7 +359,9 @@ export default function NewBrand() {
         theme="light_mitsuketa_tribute"
         placeholder={newBrand.json}
         width="100%"
-        onChange={(json: any) => setNewBrand({ ...newBrand, json })}
+        onChange={(json: JsonValues) =>
+          setNewBrand({ ...newBrand, json: json.jsObject })
+        }
       />
     </>
   );

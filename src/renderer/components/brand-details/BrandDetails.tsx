@@ -18,9 +18,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FolderIcon from '@mui/icons-material/Folder';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import ReactJson from 'react-json-view';
+import JSONInput from 'react-json-editor-ajrm';
 import { Store, updateBrand } from 'renderer/redux/BrandSlice';
 import { HexColorInput, HexColorPicker } from 'react-colorful';
+import { JsonValues } from 'renderer/models/JsonValues';
 import { BrandModel } from '../../models/BrandModel';
 import DeleteDialog from '../dialog/DeleteDialog';
 
@@ -36,7 +37,21 @@ export default function BrandDetails() {
     (brandModel: BrandModel) => brandModel.id === Number(id)
   );
   const [newBrand, setNewBrand] = useState<BrandModel>(
-    brand || ({} as BrandModel)
+    brand || {
+      id: NaN,
+      name: '',
+      logoPath: '',
+      json: templateJson,
+      primaryColor: '#000000',
+      secondaryColor: '#FFFFFF',
+      scheme: 'primary',
+      features: {
+        fundraiser: false,
+        tickets: false,
+        membership: false,
+        limitFundraisers: false,
+      },
+    }
   );
 
   const openFile = async () => {
@@ -264,10 +279,14 @@ export default function BrandDetails() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={newBrand.json.default.features.fundraiser}
+                    checked={newBrand.features.fundraiser}
                     onChange={(e) =>
                       setNewBrand({
                         ...newBrand,
+                        features: {
+                          ...newBrand.features,
+                          fundraiser: e.target.checked,
+                        },
                         json: {
                           default: {
                             ...newBrand.json.default,
@@ -286,10 +305,14 @@ export default function BrandDetails() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={newBrand.json.default.features.tickets}
+                    checked={newBrand.features.tickets}
                     onChange={(e) =>
                       setNewBrand({
                         ...newBrand,
+                        features: {
+                          ...newBrand.features,
+                          tickets: e.target.checked,
+                        },
                         json: {
                           default: {
                             ...newBrand.json.default,
@@ -308,10 +331,14 @@ export default function BrandDetails() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={newBrand.json.default.features.membership}
+                    checked={newBrand.features.membership}
                     onChange={(e) =>
                       setNewBrand({
                         ...newBrand,
+                        features: {
+                          ...newBrand.features,
+                          membership: e.target.checked,
+                        },
                         json: {
                           default: {
                             ...newBrand.json.default,
@@ -330,10 +357,14 @@ export default function BrandDetails() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={newBrand.json.default.features.limitFundraisers}
+                    checked={newBrand.features.limitFundraisers}
                     onChange={(e) =>
                       setNewBrand({
                         ...newBrand,
+                        features: {
+                          ...newBrand.features,
+                          limitFundraisers: e.target.checked,
+                        },
                         json: {
                           default: {
                             ...newBrand.json.default,
@@ -353,10 +384,13 @@ export default function BrandDetails() {
           </div>
           <div className="json">
             <InputLabel>Json</InputLabel>
-            <ReactJson
-              src={newBrand.json}
-              displayDataTypes={false}
-              onEdit={(e) => setNewBrand({ ...newBrand, json: e.updated_src })}
+            <JSONInput
+              theme="light_mitsuketa_tribute"
+              placeholder={newBrand.json}
+              width="100%"
+              onChange={(json: JsonValues) =>
+                setNewBrand({ ...newBrand, json: json.jsObject })
+              }
             />
           </div>
         </>
