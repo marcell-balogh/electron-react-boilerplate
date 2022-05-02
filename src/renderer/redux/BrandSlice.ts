@@ -55,7 +55,7 @@ export const brandSlice = createSlice({
       );
       const newBrand: BrandModel = {
         ...action.payload.newBrand,
-        logoPath: action.payload.oldBrand.logoPath,
+        logoPath: `${state.directoryPath}\\${action.payload.newBrand.name}\\icon.png`,
       };
       const index = state.brands.findIndex(
         (brand) => brand.id === action.payload.oldBrand.id

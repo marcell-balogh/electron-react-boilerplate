@@ -67,7 +67,7 @@ export function saveBrand(
   // overwrite logo
   if (oldBrand.logoPath !== newBrand.logoPath) {
     window.electron.fs.writeFileSync(
-      `${DIRECTORY_PATH}\\${newBrand.name}\\icon.png`,
+      `${DIRECTORY_PATH}\\${oldBrand.name}\\icon.png`,
       window.electron.fs.readFileSync(newBrand.logoPath)
     );
   }
