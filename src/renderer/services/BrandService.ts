@@ -5,7 +5,7 @@ export function readBrand(
   DIRECTORY_PATH: string
 ): BrandModel | undefined {
   const brandPath = `${DIRECTORY_PATH}\\${brandName}`;
-  const logoPath = `${brandPath}\\icon.png`;
+  const logoPath = `${brandPath}\\rn\\logo.png`;
   const raw = window.electron.fs.readFileSync(
     `${brandPath}\\config.json`,
     'utf8'
@@ -67,7 +67,7 @@ export function saveBrand(
   // overwrite logo
   if (oldBrand.logoPath !== newBrand.logoPath) {
     window.electron.fs.writeFileSync(
-      `${DIRECTORY_PATH}\\${oldBrand.name}\\icon.png`,
+      `${DIRECTORY_PATH}\\${oldBrand.name}\\rn\\logo.png`,
       window.electron.fs.readFileSync(newBrand.logoPath)
     );
   }
@@ -102,7 +102,7 @@ export function createBrand(DIRECTORY_PATH: string, brand: BrandModel) {
 
   // create logo
   window.electron.fs.writeFileSync(
-    `${brandPath}\\icon.png`,
+    `${brandPath}\\rn\\logo.png`,
     window.electron.fs.readFileSync(brand.logoPath)
   );
 
